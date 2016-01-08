@@ -1,0 +1,31 @@
+{"type":"register","name":"$name","password":"$pwd"} Server:{"type":"register","error":$(0|1重名)}
+
+{"type":"login","name":"$name","password":"$pwd"} Server:{"type":"login","error":$(0|1密码错误或者无此用户)}
+
+{"type":"logout"}
+
+{"type":"create","filename":"$filename"} Server:{"type":"create","error":$(0|1已有此文件)}
+创建文件并打开该文件，创建者有这个文件的编辑权限，若成功，客户端应创建一个新的空编辑标签，并以filename为名，服务器认为当前正在编辑该文件
+
+{"type":"edit","filename":"$filename"} Server:{"type":"edit","error":$(0|1无此文件|2权限不足)}
+编辑已有文件filename，若成功，客户端应创建一个新的空编辑标签，以filename为名，服务器认为当前正在编辑该文件，并且接收接下来服务器的消息，给此标签页添加文件内容：
+Server:{"type":"edit_content","filename":"$filename","isend":$(0接下来还有内容|1接下来无内容),{"oldRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":38}},"newRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":39}},"oldText":"","newText":"d"}(跟期中修改的消息一样)}
+若isend为0的话，接下来还会有type为edit_content的的消息
+
+{"type":"upload","filename":"$filename"} Server:{"type":"upload","error":$(0|1已有该文件)}
+上传文件并命名为filename，若返回0则能上传，服务器将等待客户端发送文件内容（类似上一个的发法），并且客户端此时最好不要发其他消息（写起来方便，考虑中），客户端将发送以下内容：
+{"type":"upload_content","filename":"$filename","isend":$(0|1),{"oldRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":38}},"newRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":39}},"oldText":"","newText":"d"}}
+
+{"type":"change_auth","filename":"$filename","other_name":"$other_name","auth":$(0|1|2|-1|-2)}
+0使other_name不能修改|1使other_name能修改内容但不能改权限|2other_name能修改内容也能改权限|-1所有人都可以修改内容，能修改权限的人不变，此时other_name域无用|-2只有自己能修改内容，能修改权限，把其他人都踢了，也没用other_name
+Server:{"type":"change_auth","error":(0|1权限不够，不能修改文件权限)}
+
+{"type":"rm","filename":"$filename"} Server:{"type":"rm","error":$(0|1权限不够)} 大概定为 要有修改权限的权限 才能删除。
+
+{"type":"ls"} Server:{"type":"ls","list":"file1,file2,file3,file4"} 先没分段，列出有编辑权限的文件
+
+{"edit_file":"$filename","oldRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":38}},"newRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":39}},"oldText":"","newText":"d"}
+Server:转发给其他所有在编辑该文件的客户
+
+{"type":"now_file","filename":"$filename"} 告诉服务器现在在编辑哪一个文件
+
