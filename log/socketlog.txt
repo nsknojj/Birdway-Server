@@ -1,0 +1,35 @@
+{"oldRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":38}},"newRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":39}},"oldText":"","newText":"d"}
+{"oldRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":39}},"newRange":{"start":{"row":49,"column":38},"end":{"row":49,"column":38}},"oldText":"d","newText":""}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":0}},"newRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":1}},"oldText":"","newText":"a"}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":1}},"newRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":0}},"oldText":"a","newText":""}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":0}},"newRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":1}},"oldText":"","newText":"a"}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":1}},"newRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":2}},"oldText":"a","newText":"af"}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":2}},"newRange":{"start":{"row":57,"column":0},"end":{"row":58,"column":2}},"oldText":"af","newText":"afterEach ->\n  "}
+{"oldRange":{"start":{"row":58,"column":0},"end":{"row":58,"column":0}},"newRange":{"start":{"row":58,"column":0},"end":{"row":58,"column":0}},"oldText":"","newText":""}
+{"oldRange":{"start":{"row":58,"column":2},"end":{"row":58,"column":2}},"newRange":{"start":{"row":58,"column":2},"end":{"row":58,"column":3}},"oldText":"","newText":"b"}
+{"oldRange":{"start":{"row":58,"column":2},"end":{"row":58,"column":3}},"newRange":{"start":{"row":58,"column":2},"end":{"row":58,"column":4}},"oldText":"b","newText":"be"}
+{"oldRange":{"start":{"row":58,"column":2},"end":{"row":58,"column":4}},"newRange":{"start":{"row":58,"column":2},"end":{"row":59,"column":2}},"oldText":"be","newText":"beforeEach ->\n  "}
+{"oldRange":{"start":{"row":59,"column":0},"end":{"row":59,"column":0}},"newRange":{"start":{"row":59,"column":0},"end":{"row":59,"column":2}},"oldText":"","newText":"  "}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":59,"column":4}},"newRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":1}},"oldText":"afterEach ->\n  beforeEach ->\n    ","newText":"a"}
+{"oldRange":{"start":{"row":57,"column":1},"end":{"row":57,"column":1}},"newRange":{"start":{"row":57,"column":1},"end":{"row":57,"column":2}},"oldText":"","newText":" "}
+{"oldRange":{"start":{"row":57,"column":2},"end":{"row":57,"column":2}},"newRange":{"start":{"row":57,"column":2},"end":{"row":58,"column":0}},"oldText":"","newText":"\n"}
+{"oldRange":{"start":{"row":58,"column":0},"end":{"row":58,"column":0}},"newRange":{"start":{"row":58,"column":0},"end":{"row":58,"column":0}},"oldText":"","newText":""}
+{"oldRange":{"start":{"row":58,"column":0},"end":{"row":58,"column":0}},"newRange":{"start":{"row":58,"column":0},"end":{"row":58,"column":1}},"oldText":"","newText":"b"}
+{"oldRange":{"start":{"row":58,"column":1},"end":{"row":58,"column":1}},"newRange":{"start":{"row":58,"column":1},"end":{"row":58,"column":2}},"oldText":"","newText":" "}
+{"oldRange":{"start":{"row":58,"column":2},"end":{"row":58,"column":2}},"newRange":{"start":{"row":58,"column":2},"end":{"row":59,"column":0}},"oldText":"","newText":"\n"}
+{"oldRange":{"start":{"row":59,"column":0},"end":{"row":59,"column":0}},"newRange":{"start":{"row":59,"column":0},"end":{"row":59,"column":0}},"oldText":"","newText":""}
+{"oldRange":{"start":{"row":59,"column":0},"end":{"row":59,"column":0}},"newRange":{"start":{"row":59,"column":0},"end":{"row":59,"column":1}},"oldText":"","newText":"c"}
+{"oldRange":{"start":{"row":59,"column":1},"end":{"row":59,"column":1}},"newRange":{"start":{"row":59,"column":1},"end":{"row":59,"column":2}},"oldText":"","newText":" "}
+{"oldRange":{"start":{"row":59,"column":2},"end":{"row":59,"column":2}},"newRange":{"start":{"row":59,"column":2},"end":{"row":60,"column":0}},"oldText":"","newText":"\n"}
+{"oldRange":{"start":{"row":60,"column":0},"end":{"row":60,"column":0}},"newRange":{"start":{"row":60,"column":0},"end":{"row":60,"column":0}},"oldText":"","newText":""}
+{"oldRange":{"start":{"row":60,"column":0},"end":{"row":60,"column":0}},"newRange":{"start":{"row":60,"column":0},"end":{"row":60,"column":1}},"oldText":"","newText":"d"}
+{"oldRange":{"start":{"row":60,"column":1},"end":{"row":60,"column":1}},"newRange":{"start":{"row":60,"column":1},"end":{"row":60,"column":2}},"oldText":"","newText":" "}
+{"oldRange":{"start":{"row":60,"column":2},"end":{"row":60,"column":2}},"newRange":{"start":{"row":60,"column":2},"end":{"row":61,"column":0}},"oldText":"","newText":"\n"}
+{"oldRange":{"start":{"row":61,"column":0},"end":{"row":61,"column":0}},"newRange":{"start":{"row":61,"column":0},"end":{"row":61,"column":0}},"oldText":"","newText":""}
+{"oldRange":{"start":{"row":61,"column":0},"end":{"row":61,"column":0}},"newRange":{"start":{"row":61,"column":0},"end":{"row":61,"column":1}},"oldText":"","newText":"d"}
+{"oldRange":{"start":{"row":61,"column":1},"end":{"row":61,"column":1}},"newRange":{"start":{"row":61,"column":1},"end":{"row":61,"column":2}},"oldText":"","newText":" "}
+{"oldRange":{"start":{"row":61,"column":2},"end":{"row":61,"column":2}},"newRange":{"start":{"row":61,"column":2},"end":{"row":62,"column":0}},"oldText":"","newText":"\n"}
+{"oldRange":{"start":{"row":62,"column":0},"end":{"row":62,"column":0}},"newRange":{"start":{"row":62,"column":0},"end":{"row":62,"column":0}},"oldText":"","newText":""}
+{"oldRange":{"start":{"row":57,"column":0},"end":{"row":62,"column":0}},"newRange":{"start":{"row":57,"column":0},"end":{"row":57,"column":0}},"oldText":"a \nb \nc \nd \nd \n","newText":""}
+{"oldRange":{"start":{"row":56,"column":31},"end":{"row":57,"column":0}},"newRange":{"start":{"row":56,"column":31},"end":{"row":56,"column":31}},"oldText":"\n","newText":""}
+{"oldRange":{"start":{"row":56,"column":31},"end":{"row":56,"column":31}},"newRange":{"start":{"row":56,"column":31},"end":{"row":57,"column":0}},"oldText":"","newText":"\n"}
