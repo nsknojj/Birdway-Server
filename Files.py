@@ -4,6 +4,8 @@ import json
 path = 'log/'
 
 
+
+
 def get_file(fileNo):
     return down_file('a.txt')
 
@@ -74,18 +76,6 @@ def down_file(name):
 
 # if want to create an empty file, let content = ''
 def up_file(name='', content=''):
-    # if len(name) == 0 or len(content) == 0:
-    #     return
-    # conn = Users.connect()
-    # cursor = conn.cursor()
-    # cursor.execute('SHOW TABLES')
-    # tables = cursor.fetchall()
-    # if not ('file',) in tables:
-    #     cursor.execute('CREATE TABLE file ('
-    #                    'id int unsigned not null auto_increment primary key, '
-    #                    'name varchar(100), '
-    #                    'password varchar(30))')
-    #     conn.commit()
     with open(path + name, 'wb') as fout:
         fout.write(content)
         print 'Save', name

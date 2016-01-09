@@ -69,6 +69,8 @@ def tcp_link(sock, addr):
                 u = Users.get_user(username)
                 if len(u) < 2:
                     error = 1
+                elif u[2] != msg['password']:
+                    error = 1
                 else:
                     error = 0
                     login = 1

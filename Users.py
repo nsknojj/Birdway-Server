@@ -61,4 +61,12 @@ def get_password(name='admin', id=0):
     return get_user(name=name, id=id)[2]
 
 
-print insert_user(name='ab', password='1213')
+def all_users():
+    conn = connect()
+    cursor = conn.cursor()
+    s = "SELECT name FROM user;"
+    cursor.execute(s)
+    return cursor.fetchall()
+
+
+# print insert_user(name='ab', password='1213')

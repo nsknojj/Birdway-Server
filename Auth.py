@@ -1,61 +1,31 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-import Files
 import Users
 from Users import connect
 
 
-def insert_editor(filename, username):
+def create_table():
     conn = connect()
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = cursor.fetchall()
     if not ('authorization',) in tables:
-        cursor.execute('CREATE TABLE editor ('
+        cursor.execute('CREATE TABLE authorization ('
                        'id  INTEGER PRIMARY KEY AUTOINCREMENT, '
                        'filename    TEXT    NOT NULL, '
                        'username    TEXT    NOT NULL,'
                        'auth    INTEGER);')
         conn.commit()
-
-    s = "SELECT name FROM authorization WHERE username='" + username + "' filename='" + filename + "';"
-    cursor.execute(s)
-    editor_list = cursor.fetchall()
-    if len(editor_list) > 0:
-        return 0
-
-    s = "INSERT INTO editor (filename, username) " + "values ('" + filename + "', '" + username + "');"
-    # print s
-    cursor.execute(s)
-    conn.commit()
-    print 'Insert editor (filename, username): ', filename, username
     cursor.close()
     conn.close()
-    return 1
-
-
-# def query_editor(filename, username):
-#     conn = connect()
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-#     tables = cursor.fetchall()
-#     if not ('editor',) in tables:
-#         cursor.close()
-#         conn.close()
-#         return 0
-#
-#     s = "SELECT name FROM editor WHERE username='" + username + "' filename='" + filename + "';"
-#     cursor.execute(s)
-#     editor_list = cursor.fetchall()
-#     if len(editor_list) > 0:
-#         return 1
+    return
 
 
 def have_edit_auth(filename, username):
     conn = connect()
     cursor = conn.cursor()
-    s = "SELECT auth FROM authorization WHERE filename='" + filename + "' username='" + username + "';"
+    s = "SELECT auth FROM authorization WHERE filename='" + filename + "' AND username='" + username + "';"
     cursor.execute(s)
     ret = cursor.fetchall()
     cursor.close()
@@ -68,7 +38,7 @@ def have_edit_auth(filename, username):
 def have_manage_auth(filename, username):
     conn = connect()
     cursor = conn.cursor()
-    s = "SELECT auth FROM authorization WHERE filename='" + filename + "' username='" + username + "';"
+    s = "SELECT auth FROM authorization WHERE filename='" + filename + "' AND username='" + username + "';"
     cursor.execute(s)
     ret = cursor.fetchall()
     cursor.close()
@@ -89,14 +59,23 @@ def get_edit_list(username):
     return ret
 
 
-def change(filename, username, auth):
+def change(filename, username, auth, myname):
     if auth == -1:
-        pass
+        for user in Users.all_users():
+            if user[0] != myname:
+                change(filename, user[0], 1, myname)
+        return
+
     if auth == -2:
-        pass
+        for user in Users.all_users():
+            if user[0] != myname:
+                change(filename, user[0], 0, myname)
+        return
+
     conn = connect()
     cursor = conn.cursor()
-    s = "SELECT auth FROM authorization WHERE filename='" + filename + "' username='" + username + "';"
+    s = "SELECT auth FROM authorization WHERE filename='" + filename + "' AND username='" + username + "';"
+    # print s
     cursor.execute(s)
     ret = cursor.fetchall()
     if len(ret) == 0:
@@ -106,6 +85,13 @@ def change(filename, username, auth):
         conn.commit()
     else:
         s = "UPDATE authorization SET auth=" + str(auth) + \
-            "WHERE filename='" + filename + "', username='" + username + "';"
+            " WHERE filename='" + filename + "' AND username='" + username + "';"
+        # print s
         cursor.execute(s)
         conn.commit()
+
+
+create_table()
+# print Users.all_users()
+change('a.txt', 'zwt', -2, 'zwt')
+# change('a.txt', 'zwt', 2, 'zwt')
