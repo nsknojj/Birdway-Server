@@ -53,9 +53,13 @@ def delete_file(name):
         print 'No such file'
 
 
+def exist(name):
+    return os.path.exists(path + name)
+
+
 def down_file(name):
     ret = []
-    if os.path.exists(path + name):
+    if exist(name):
         with open(path + name, 'rb') as fin:
             print 'Get file', name
             file = fin.readlines()
@@ -85,6 +89,20 @@ def up_file(name='', content=''):
     with open(path + name, 'wb') as fout:
         fout.write(content)
         print 'Save', name
+
+
+def create_file(filename):
+    if exist(filename):
+        return 1
+    with open(path + filename, 'wb') as fout:
+        pass
+    print 'Create', filename
+    return 0
+
+
+# return (content, r, c)
+def get_file_string(filename):
+    pass
 
 
 # with open(path + 'socketlog2.txt') as modin:
