@@ -91,7 +91,7 @@ def change(filename, username, auth, myname):
         conn.commit()
 
 
-create_table()
+# create_table()
 # print Users.all_users()
-change('a.txt', 'zwt', -2, 'zwt')
+# change('a.txt', 'zwt', -2, 'zwt')
 # change('a.txt', 'zwt', 2, 'zwt')

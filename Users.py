@@ -17,7 +17,7 @@ def insert_user(name, password):
         cursor.execute('CREATE TABLE user ('
                        'id  INTEGER PRIMARY KEY AUTOINCREMENT, '
                        'name    TEXT    NOT NULL, '
-                       'password    CHAR(100));')
+                       'password    LONG);')
         conn.commit()
 
     s = "SELECT name FROM user WHERE name='" + name + "';"
@@ -26,7 +26,7 @@ def insert_user(name, password):
     if len(name_list) > 0:
         return 0
 
-    s = "INSERT INTO user (name, password) " + "values ('" + name + "', '" + password + "');"
+    s = "INSERT INTO user (name, password) " + "values ('" + name + "', " + str(hash(password)) + ");"
     # print s
     cursor.execute(s)
     conn.commit()
@@ -56,9 +56,9 @@ def get_user(name='admin', id=0):
         return []
 
 
-# please make sure the user exists
-def get_password(name='admin', id=0):
-    return get_user(name=name, id=id)[2]
+# # please make sure the user exists
+# def get_password(name='admin', id=0):
+#     return get_user(name=name, id=id)[2]
 
 
 def all_users():
