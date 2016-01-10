@@ -2,7 +2,7 @@
 import os
 import json
 import threading
-path = 'log/'
+path = ''
 file_list = dict()
 editing = dict()
 lock = dict()
@@ -73,16 +73,16 @@ def change_file(filename, modify):
     # save_file(fileNo, '\n'.join(file))
 
 
-def delete_file(name):
-    if exist(name):
-        if len(editing[name]) == 0:
-            os.remove(path + name)
-            print name, 'removed'
-            del lock[name]
-        else:
-            print name, 'is being edited'
-    else:
-        print 'No such file'
+# def delete_file(name):
+#     if exist(name):
+#         if len(editing[name]) == 0:
+#             os.remove(path + name)
+#             print name, 'removed'
+#             del lock[name]
+#         else:
+#             print name, 'is being edited'
+#     else:
+#         print 'No such file'
 
 
 def exist(name):
@@ -112,21 +112,22 @@ def up_file(name, content=''):
     lock[name].release()
 
 
-def create_file(filename):
-    if exist(filename):
-        return 1
-    with open(path + filename, 'w') as fout:
-        pass
-    print 'Create', filename
-    lock[filename] = threading.Lock()
-    return 0
+# def create_file(filename):
+#     if exist(filename):
+#         return 1
+#     with open(path + filename, 'w') as fout:
+#         pass
+#     print 'Create', filename
+#     lock[filename] = threading.Lock()
+#     return 0
 
 
 # return (content, r, c)
 def edit_file(filename):
-    line_list = file_list[filename]
-    if len(line_list) > 0:
-        return file_to_string(line_list)
+    if filename in file_list:
+        line_list = file_list[filename]
+        if len(line_list) > 0:
+            return file_to_string(line_list)
     ret, file_list[filename] = down_file(filename)
     return ret
 

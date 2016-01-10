@@ -185,6 +185,14 @@ def tcp_link(skt, addr):
     skt.close()
     print('Connection from %s:%s closed.' % addr)
 
+
+def save_thread():
+    while True:
+        if time.time() - init_time > 10:
+            for filename in Files.file_list:
+                Files.save_file(filename)
+    pass
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ip = '127.0.0.1'
 port = 2333
@@ -194,6 +202,8 @@ print 'Host:', ip + ':' + str(port)
 print 'Waiting for connection...'
 onlineList = []
 name_list = ['' for i in range(100)]
+init_time = time.time()
+threading.Thread(target=save_thread)
 while True:
     sock, addr = s.accept()
     onlineList.append(sock)
