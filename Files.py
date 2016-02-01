@@ -9,6 +9,7 @@ lock = dict()
 
 
 def save_file(filename):
+    # print 'Save file', filename
     up_file(filename, file_to_string(file_list[filename]))
 
 
@@ -23,9 +24,9 @@ def add_editor(filename, sock):
 
 def del_editor(filename, sock):
     editing[filename].remove(sock)
-    if len(editing[filename]) == 0:
-        save_file(filename)
-        file_list[filename] = []
+    # if len(editing[filename]) == 0:
+    #     save_file(filename)
+    #     file_list[filename] = []
 
 
 def string_to_file(s):
@@ -44,6 +45,10 @@ def change(f, modify):
     osy = modify["oldRange"]["start"]["column"]
     oex = modify["oldRange"]["end"]["row"]
     oey = modify["oldRange"]["end"]["column"]
+    osx = min(osx, len(f) - 1)
+    oex = min(oex, len(f) - 1)
+    osy = min(len(f[osx]), osy)
+    oey = min(len(f[oex]), oey)
     if osx == oex:
         tmp = f[osx][:osy] + f[osx][oey:]
         f[osx] = tmp
@@ -54,7 +59,7 @@ def change(f, modify):
 
     ins_list = modify["newText"].split('\n')
     if len(ins_list) == 1:
-        tmp = f[osx][:osy] + ins_list[0] + f[osx][oey:]
+        tmp = f[osx][:osy] + ins_list[0] + f[osx][osy:]
         f[osx] = tmp
     else:
         f.insert(osx + 1, ins_list[-1] + f[osx][osy + 1:])
@@ -108,7 +113,7 @@ def up_file(name, content=''):
     lock[name].acquire()
     with open(path + name, 'w') as fout:
         fout.write(content)
-        print 'Upload', name
+        # print 'Upload', name
     lock[name].release()
 
 

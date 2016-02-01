@@ -1,0 +1,12 @@
+{"type":"login",pwd:"xxx"}
+server: {"type":"login","error":0/1,若是0的话有"content":"xxxxx"}
+
+{"type":"logout"}
+
+server: {"type":"syn","content":"xxxx"}
+
+{"type":"modify",修改的json内容}
+server: 转发
+
+{"type":"move",cursor move的json内容}
+server: 转发

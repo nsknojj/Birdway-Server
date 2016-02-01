@@ -5,9 +5,8 @@ import threading
 import time
 import json
 import getopt
-import Users
 import Files
-import Auth
+import getip
 from random import random
 
 
@@ -15,9 +14,12 @@ lock = dict()
 host_pwd = ''
 host_filename = 'log/a.txt'
 online_list = list()
+cnt = 0
 
 
 def send(skt, content):
+    # if 'newText' in json.loads(content):
+    #     print skt, content
     lock[skt].acquire()
     skt.sendall(content + '\n')
     lock[skt].release()
@@ -30,7 +32,11 @@ def send_to_all(skt, content, filename):
 
 
 def tcp_link(skt, addr):
+    syn_time = time.time()
+    # try:
     print('Accept new connection from %s:%s...' % addr)
+    global cnt
+    cnt += 1
     data = ''
     login = 0
     while True:
@@ -55,6 +61,8 @@ def tcp_link(skt, addr):
             reply = dict()
             query = msg['type']
             reply['type'] = query
+            # if msg['type'] == 'modify':
+            #     print msg['newText']
 
             if query == 'login':
                 pwd = msg['pwd']
@@ -74,19 +82,45 @@ def tcp_link(skt, addr):
 
             if query == 'logout':
                 login = 0
-                Files.del_editor(host_filename, skt)
-                online_list.remove(skt)
                 break
 
             elif query == 'modify':
-                modify = msg['content']
+                modify = msg
+                print modify
                 filename = host_filename
+                # print Files.editing[host_filename]
                 send_to_all(skt, json.dumps(msg), host_filename)
+                print '=========================='
+                print Files.edit_file(host_filename)
                 Files.change_file(filename, modify)
+                print '====>'
+                print Files.edit_file(host_filename)
+                print '=========================='
 
+            elif query == 'move':
+                msg['id'] = cnt
+                send_to_all(skt, json.dumps(msg), host_filename)
+                # now = time.time()
+                # if now - syn_time > 5:
+                #     print 'syn'
+                #     syn_time = now
+                #     reply = dict()
+                #     reply['type'] = 'syn'
+                #     reply['content'] = Files.edit_file(host_filename)
+                #     send(skt, json.dumps(reply))
+
+    save_all()
+    Files.del_editor(host_filename, skt)
+    online_list.remove(skt)
     skt.close()
     del lock[skt]
     print('Connection from %s:%s closed.' % addr)
+    # except:
+    #     skt.close()
+    #     del lock[skt]
+    #     Files.del_editor(host_filename, skt)
+    #     online_list.remove(skt)
+    #     print('Connection from %s:%s closed.' % addr)
 
 
 def save_all():
@@ -98,12 +132,13 @@ def save_thread():
     save_time = time.time()
     while True:
         now = time.time()
-        if now - save_time > 10:
+        if now - save_time > 1:
             save_time = now
             save_all()
 
 
 def syn_thread():
+    # return
     syn_time = time.time()
     while True:
         now = time.time()
@@ -113,16 +148,17 @@ def syn_thread():
                 reply = dict()
                 reply['type'] = 'syn'
                 reply['content'] = Files.edit_file(filename)
+                print reply['content']
                 for skt in Files.editing[filename]:
                     send(skt, json.dumps(reply))
 
 
 def usage():
     print 'birdway.py usage:'
-    print '-h,--help: print this help message.'
+    print '-h, --help: print this help message.'
     print '-f, --file: name of the file which you want to share with others'
     print '-p, --password: set a password for your file, can be omitted'
-    print 'An example: birdway.py -f log/a.txt -p 111'
+    print 'For example: birdway.py -f log/a.txt -p 111'
 
 
 def arg(argv):
@@ -144,24 +180,26 @@ def arg(argv):
             host_filename = a
 
 
-def main(argv):
-    arg(argv)
+def main():
+    arg(sys.argv)
     if not Files.exist(host_filename):
         print 'No such file'
         sys.exit(3)
     Files.lock[host_filename] = threading.Lock()
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ip = '127.0.0.1'
+    ip = ''
     port = int()
     while True:
         try:
-            port = 2333 #int(random() * 2000 + 2000)
+            port = int(random() * 2000 + 2000)
             s.bind((ip, port))
             break
         except:
             pass
     s.listen(10)
-    print 'Host:', ip + ':' + str(port)
+    ip = socket.gethostbyname(socket.gethostname())
+    print 'Host:', socket.gethostbyname_ex(socket.gethostname())
+    print 'Port:', port
     print 'File name:', host_filename
     print 'Password:', host_pwd
     print 'Waiting for connection...'
@@ -177,7 +215,6 @@ def main(argv):
 
     while True:
         sock, addr = s.accept()
-        online_list.append(sock)
         lock[sock] = threading.Lock()
         t = threading.Thread(target=tcp_link, args=(sock, addr))
         t.setDaemon(True)
@@ -186,7 +223,8 @@ def main(argv):
     del Files.lock[host_filename]
 
 if __name__ == "__main__":
-    main = threading.Thread(target=main, args=sys.argv)
+    # print getip.find_all_ip('Windows')
+    main = threading.Thread(target=main)
     main.setDaemon(True)
     main.setName('main_thread')
     main.start()
@@ -195,4 +233,3 @@ if __name__ == "__main__":
         if (cin.lower() in ['quit', 'quit()', 'exit()', 'exit', 'break', 'break()']) or not main.isAlive():
             save_all()
             sys.exit(0)
-
